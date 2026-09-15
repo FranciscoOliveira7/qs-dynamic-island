@@ -1,13 +1,10 @@
 import QtQuick
-import ".."
 
 Rectangle {
   id: root
 
   anchors.centerIn: parent
   clip: true
-
-  radius: 22
 
   width: implicitWidth
   height: implicitHeight
