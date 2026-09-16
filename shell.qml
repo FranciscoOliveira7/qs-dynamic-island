@@ -7,7 +7,7 @@ import QtQuick.Effects
 PanelWindow {
 
   exclusiveZone: 44
-  implicitHeight: capsule.implicitHeight + 20
+  // implicitHeight: capsule.implicitHeight + 20
   anchors { top: true; left: true; right: true }
   // color: "#77ff0000"
   color: "transparent"
@@ -15,7 +15,7 @@ PanelWindow {
   RectangularShadow {
     anchors.fill: capsule
 
-    radius: capsule.radius
+    radius: capsule.radius - spread / 4
     // offset.y: 1
     spread: 4
     blur: 0
@@ -32,11 +32,19 @@ PanelWindow {
     anchors.topMargin: 10
   }
 
-  Region {
-    id: capsuleMask
+  // Region {
+  //   id: capsuleMask
 
-    item: capsule
-  }
+  //   item: rect
+  // }
 
-  mask: capsuleMask
+  // Rectangle {
+  //   id: rect
+
+  //   anchors.centerIn: parent
+  //   width: 100
+  //   height: 100
+  // }
+
+  // mask: capsuleMask
 }

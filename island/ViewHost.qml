@@ -34,8 +34,8 @@ Item {
 
     onLoaded: { fadeOut.stop(); fadeIn.start() }
 
-    // width: item ? item.implicitWidth : 0
-    // height: item ? item.implicitHeight : 0
+    width: item ? item.implicitWidth : 0
+    height: item ? item.implicitHeight : 0
 
     sourceComponent: {
       switch (IslandState.state) {
@@ -60,7 +60,7 @@ Item {
 
   Component {
     id: clock
-    Idk {}
+    Clock {}
   }
 
   Component {

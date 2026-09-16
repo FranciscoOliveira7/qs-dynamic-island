@@ -5,11 +5,11 @@ Item {
   implicitWidth: 120
   implicitHeight: 30
 
-  Poller {
-    id: clock
-    command: "date +%H:%M"
-    interval: 30000
-  }
+  // Poller {
+  //   id: clock
+  //   command: "date +%H:%M"
+  //   interval: 30000
+  // }
 
   Text {
     id: clockDisplay
@@ -20,6 +20,6 @@ Item {
     font.pixelSize: 18
     font.bold: true
 
-    text: clock.value
+    text: Time.time
   }
 }

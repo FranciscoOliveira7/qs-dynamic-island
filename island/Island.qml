@@ -3,7 +3,6 @@ import QtQuick
 Rectangle {
   id: root
 
-  anchors.centerIn: parent
   clip: true
 
   width: implicitWidth
