@@ -16,7 +16,7 @@ Item {
       id: clockDisplay
       Layout.alignment: Qt.AlignHCenter
 
-      color: "#f5e2c5"
+      color: Theme.textPrimary
       font.family: "JetbrainsMono Nerd Font"
       font.pixelSize: 18
       font.bold: true
@@ -28,7 +28,7 @@ Item {
       id: dateDisplay
       Layout.alignment: Qt.AlignHCenter
 
-      color: "#f5e2c5"
+      color: Theme.textMuted
       font.family: "JetbrainsMono Nerd Font"
       font.pixelSize: 18
       font.bold: true

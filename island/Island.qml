@@ -1,4 +1,5 @@
 import QtQuick
+import ".."
 
 Rectangle {
   id: root
@@ -11,7 +12,7 @@ Rectangle {
   implicitWidth: viewHost.implicitWidth
   implicitHeight: viewHost.implicitHeight
 
-  color: "black"
+  color: Theme.background
 
   Behavior on implicitWidth {
     NumberAnimation {

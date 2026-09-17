@@ -1,7 +1,8 @@
 import Quickshell
 import QtQuick
-import "island"
 import QtQuick.Effects
+
+import "island"
 
 // qmllint disable uncreatable-type
 PanelWindow {
@@ -20,7 +21,7 @@ PanelWindow {
     spread: 4
     blur: 0
     
-    color: "#ffffff"
+    color: Theme.border
   }
 
   Island {
@@ -30,6 +31,27 @@ PanelWindow {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.top: parent.top
     anchors.topMargin: 10
+
+  }
+
+  RectangularShadow {
+    anchors.fill: systray
+
+    radius: capsule.radius - spread / 4
+    // offset.y: 1
+    spread: 4
+    blur: 0
+    
+    color: Theme.border
+  }
+
+  SystemTrayIsland {
+    id: systray
+
+    radius: 15
+    anchors.left: capsule.right
+    anchors.leftMargin: 16
+    anchors.top: capsule.top
   }
 
   // Region {

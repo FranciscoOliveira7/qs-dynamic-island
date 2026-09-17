@@ -15,7 +15,7 @@ Item {
     id: clockDisplay
     anchors.centerIn: parent
 
-    color: "#f5e2c5"
+    color: Theme.textPrimary
     font.family: "JetbrainsMono Nerd Font"
     font.pixelSize: 18
     font.bold: true

@@ -18,7 +18,7 @@ Item {
   function updateState(component) {
     // fadeIn.stop(); fadeOut.start()
 
-    console.log(component.width)
+    // console.log(component.width)
   }
 
   implicitWidth: loader.item ? loader.item.implicitWidth : 0
