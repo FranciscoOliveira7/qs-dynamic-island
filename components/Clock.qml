@@ -1,4 +1,5 @@
 import QtQuick
+import "../services" as Services
 import ".."
 
 Item {
@@ -20,6 +21,6 @@ Item {
     font.pixelSize: 18
     font.bold: true
 
-    text: Time.time
+    text: Services.Time.time
   }
 }

@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import "../services" as Services
 import ".."
 
 Item {
@@ -21,7 +22,7 @@ Item {
       font.pixelSize: 18
       font.bold: true
 
-      text: Time.time
+      text: Services.Time.time
     }
 
     Text {
@@ -33,7 +34,7 @@ Item {
       font.pixelSize: 18
       font.bold: true
 
-      text: Time.date
+      text: Services.Time.date
     }
   }
 }

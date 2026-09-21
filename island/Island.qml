@@ -6,11 +6,11 @@ Rectangle {
 
   clip: true
 
-  width: implicitWidth
-  height: implicitHeight
+  // width: implicitWidth
+  // height: implicitHeight
 
   implicitWidth: viewHost.implicitWidth
-  implicitHeight: viewHost.implicitHeight
+  implicitHeight: Math.max(30, viewHost.implicitHeight) 
 
   color: Theme.background
 
@@ -28,10 +28,20 @@ Rectangle {
     }
   }
 
-  IslandInputHandler {
-    id: inputHandler
+  // IslandInputHandler {
+  //   id: inputHandler
 
-    anchors.fill: parent
+  //   anchors.fill: parent
+  // }
+
+  HoverHandler {
+    id: hoverHandler
+
+    onHoveredChanged: controller.hovered = hovered
+  }
+
+  IslandController {
+    id: controller
   }
 
   ViewHost {

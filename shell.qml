@@ -8,10 +8,17 @@ import "island"
 PanelWindow {
 
   exclusiveZone: 44
-  // implicitHeight: capsule.implicitHeight + 20
+  implicitHeight: capsule.implicitHeight + 20
   anchors { top: true; left: true; right: true }
   // color: "#77ff0000"
   color: "transparent"
+
+  // Notifications {}
+  
+  // Rectangle {
+  //   anchors.fill: parent
+  //   color: "#77ff0000"
+  // }
 
   RectangularShadow {
     anchors.fill: capsule
@@ -54,19 +61,15 @@ PanelWindow {
     anchors.top: capsule.top
   }
 
-  // Region {
-  //   id: capsuleMask
+  Region {
+    id: capsuleMask
 
-  //   item: rect
-  // }
+    item: capsule
 
-  // Rectangle {
-  //   id: rect
+    Region {
+      item: systray
+    }
+  }
 
-  //   anchors.centerIn: parent
-  //   width: 100
-  //   height: 100
-  // }
-
-  // mask: capsuleMask
+  mask: capsuleMask
 }

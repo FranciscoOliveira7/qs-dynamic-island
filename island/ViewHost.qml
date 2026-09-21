@@ -1,5 +1,5 @@
 import QtQuick
-import "../components"
+import "../components" as Components
 
 Item {
   id: root
@@ -13,20 +13,12 @@ Item {
         return test
     }
   }
-  onSourceComponentChanged : { updateState(sourceComponent) }
-
-  function updateState(component) {
-    // fadeIn.stop(); fadeOut.start()
-
-    // console.log(component.width)
-  }
 
   implicitWidth: loader.item ? loader.item.implicitWidth : 0
   implicitHeight: loader.item ? loader.item.implicitHeight : 0
   // implicitWidth: viewLoader.width
   // implicitHeight: viewLoader.height
   anchors.centerIn: parent
-  // clip: false
 
   Loader {
     id: loader
@@ -39,10 +31,12 @@ Item {
 
     sourceComponent: {
       switch (IslandState.state) {
-        case IslandState.defaultState:
+        case IslandState.Default:
           return clock
-        case IslandState.expandedState:
+        case IslandState.Expanded:
           return test
+        case IslandState.State.Notification:
+          return notifications
       }
     }
   }
@@ -60,11 +54,16 @@ Item {
 
   Component {
     id: clock
-    Clock {}
+    Components.Clock {}
   }
 
   Component {
     id: test
-    Idk {}
+    Components.Idk {}
+  }
+
+  Component {
+    id: notifications
+    Components.NotificationPopUp {}
   }
 }
