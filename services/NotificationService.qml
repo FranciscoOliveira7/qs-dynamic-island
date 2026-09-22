@@ -42,4 +42,10 @@ Singleton {
     unreadCount--
     root.unread(root.unreadCount)
   }
+
+  function activate(notification) {
+    console.log(notification.actions)
+    if (notification.actions.length == 0) return
+    notification.actions[0].invoke()
+  }
 }
