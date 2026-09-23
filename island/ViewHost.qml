@@ -4,15 +4,9 @@ import "../components" as Components
 Item {
   id: root
 
+  required property int islandState
+
   // implicitWidth: viewLoader.item ? viewLoader.item.implicitWidth : 0
-  property var sourceComponent: {
-    switch (IslandState.state) {
-      case IslandState.defaultState:
-        return clock
-      case IslandState.expandedState:
-        return test
-    }
-  }
 
   implicitWidth: loader.item ? loader.item.implicitWidth : 0
   implicitHeight: loader.item ? loader.item.implicitHeight : 0
@@ -30,13 +24,15 @@ Item {
     height: item ? item.implicitHeight : 0
 
     sourceComponent: {
-      switch (IslandState.state) {
-        case IslandState.Default:
+      switch (root.islandState) {
+        case IslandController.Default:
           return clock
-        case IslandState.Expanded:
-          return test
-        case IslandState.State.Notification:
+        case IslandController.Expanded:
+          return expanded
+        case IslandController.Notification:
           return notifications
+        case IslandController.Launcher:
+          return launcher
       }
     }
   }
@@ -58,12 +54,17 @@ Item {
   }
 
   Component {
-    id: test
+    id: expanded
     Components.Idk {}
   }
 
   Component {
     id: notifications
     Components.NotificationPopUp {}
+  }
+
+  Component {
+    id: launcher
+    Components.AppLauncher {}
   }
 }

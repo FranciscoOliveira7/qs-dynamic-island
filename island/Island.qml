@@ -6,6 +6,8 @@ Rectangle {
 
   clip: true
 
+  readonly property bool isKeyboardFocused: controller.isKeyboardFocused
+
   // width: implicitWidth
   // height: implicitHeight
 
@@ -47,6 +49,7 @@ Rectangle {
   ViewHost {
     id: viewHost
 
+    islandState: controller.islandState
     anchors.centerIn: parent
   }
 }

@@ -1,3 +1,4 @@
+import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import QtQuick
@@ -24,7 +25,6 @@ Rectangle {
       model: SystemTray.items
 
       delegate: Rectangle {
-        // Layout.fillWidth: true
         width: 30
         height: 30
         color: Theme.surface
@@ -37,9 +37,48 @@ Rectangle {
           source: modelData.icon
         }
 
-        // QsMenuAnchor {
-        //   menu: modelData.menu
+        HoverHandler {
+          cursorShape: Qt.PointingHandCursor
+        }
+
+        TapHandler {
+          acceptedButtons: Qt.LeftButton | Qt.RightButton
+          onTapped: (eventPoint, button) => {
+            console.log("test")
+            if (button & Qt.RightButton) {
+              // modelData.secondaryActivate()
+              if (modelData.hasMenu) {
+                menuAnchor.open()
+              }
+            } else {
+              modelData.activate()
+            }
+          }
+        }
+        QsMenuOpener {
+          id: rootMenu
+          menu: modelData.menu
+        }
+        // Rectangle {
+        //   // anchors.top: parent
+        //   width: 20
+        //   height: 20
+
+
+        //   Text {
+        //     text: rootMenu.children[0].text
+        //   }
         // }
+        QsMenuAnchor {
+          id: menuAnchor
+          // anchor.window: parent.window
+          menu: modelData ? modelData.menu : null
+
+          // Define onde o menu vai abrir (alinha-se à tua janela/ícone)
+          anchor.window: Quickshell.window
+          anchor.rect: Qt.rect(trayItemArea.x, trayItemArea.y, trayItemArea.width, trayItemArea.height)
+          anchor.edges: Edges.Bottom // Abre para baixo do ícone
+        }
       }
     }
   }

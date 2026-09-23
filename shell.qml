@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Wayland
 import QtQuick
 import QtQuick.Effects
 
@@ -12,6 +13,10 @@ PanelWindow {
   anchors { top: true; left: true; right: true }
   // color: "#77ff0000"
   color: "transparent"
+
+  // WlrLayershell.layer: WlrLayer.Overlay
+  WlrLayershell.keyboardFocus: capsule.isKeyboardFocused ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+  WlrLayershell.namespace: "quickshell-launcher"
 
   // Notifications {}
   
@@ -52,23 +57,23 @@ PanelWindow {
     color: Theme.border
   }
 
-  SystemTrayIsland {
-    id: systray
+  // SystemTrayIsland {
+  //   id: systray
 
-    radius: 15
-    anchors.left: capsule.right
-    anchors.leftMargin: 16
-    anchors.top: capsule.top
-  }
+  //   radius: 15
+  //   anchors.left: capsule.right
+  //   anchors.leftMargin: 16
+  //   anchors.top: capsule.top
+  // }
 
+  // Prevents the panel window from stealing the cursor input
   Region {
     id: capsuleMask
 
     item: capsule
-
-    Region {
-      item: systray
-    }
+    // Region {
+    //   item: systray
+    // }
   }
 
   mask: capsuleMask

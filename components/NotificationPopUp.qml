@@ -10,8 +10,8 @@ Item {
   
   id: root
   
-  implicitWidth: 220
-  implicitHeight: column.height
+  implicitWidth: 280
+  implicitHeight: column.implicitHeight
 
   property var service: NotificationService
 
@@ -35,8 +35,8 @@ Item {
         // }
 
         Layout.fillWidth: true
-        Layout.preferredHeight: 60
-        // Layout.preferredHeight: layout.implicitHeight + 20
+        // Layout.preferredHeight: 60
+        Layout.preferredHeight: layout.implicitHeight + 20
         radius: 15
         color: Theme.surface
         border.width: 0

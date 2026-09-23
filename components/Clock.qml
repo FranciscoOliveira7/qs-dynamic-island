@@ -3,7 +3,9 @@ import "../services" as Services
 import ".."
 
 Item {
-  implicitWidth: 120
+  id: root
+  
+  implicitWidth: 180
   implicitHeight: 30
 
   // Poller {
@@ -22,5 +24,11 @@ Item {
     font.bold: true
 
     text: Services.Time.time
+  }
+
+  Battery {
+    anchors.right: root.right
+    anchors.verticalCenter: clockDisplay.verticalCenter
+    anchors.rightMargin: 10
   }
 }

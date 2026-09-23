@@ -8,6 +8,9 @@ import QtQuick
 
 QtObject {
 
+    property color green: "#a6e3a1"
+    property color purple: "#b4befe"
+
     // =========================================================
     // BACKGROUNDS
     // =========================================================
