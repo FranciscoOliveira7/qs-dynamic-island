@@ -12,16 +12,18 @@ Item {
   implicitHeight: loader.item ? loader.item.implicitHeight : 0
   // implicitWidth: viewLoader.width
   // implicitHeight: viewLoader.height
-  anchors.centerIn: parent
+  // anchors.centerIn: parent
+
+  anchors.fill: parent
 
   Loader {
     id: loader
-    anchors.centerIn: parent
+    anchors.fill: parent
 
     onLoaded: { fadeOut.stop(); fadeIn.start() }
 
-    width: item ? item.implicitWidth : 0
-    height: item ? item.implicitHeight : 0
+    // width: item ? item.implicitWidth : 0
+    // height: item ? item.implicitHeight : 0
 
     sourceComponent: {
       switch (root.islandState) {

@@ -30,10 +30,10 @@ PanelWindow {
 
     radius: capsule.radius - spread / 4
     // offset.y: 1
-    spread: 4
-    blur: 0
+    // spread: 4
+    // blur: 0
     
-    color: Theme.border
+    // color: Theme.border
   }
 
   Island {

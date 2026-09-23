@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 import QtCore
-import Quickshell
 
 QtObject {
   property bool launcherVisible: false

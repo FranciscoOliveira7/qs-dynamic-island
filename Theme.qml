@@ -10,6 +10,8 @@ QtObject {
 
     property color green: "#a6e3a1"
     property color purple: "#b4befe"
+    property color crust: "#11111b"
+    property color base: "#1e1e2e"
 
     // =========================================================
     // BACKGROUNDS

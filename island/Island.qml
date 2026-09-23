@@ -14,7 +14,7 @@ Rectangle {
   implicitWidth: viewHost.implicitWidth
   implicitHeight: Math.max(30, viewHost.implicitHeight) 
 
-  color: Theme.background
+  color: Theme.crust
 
   Behavior on implicitWidth {
     NumberAnimation {
@@ -50,6 +50,5 @@ Rectangle {
     id: viewHost
 
     islandState: controller.islandState
-    anchors.centerIn: parent
   }
 }

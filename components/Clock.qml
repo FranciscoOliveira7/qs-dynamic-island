@@ -5,8 +5,10 @@ import ".."
 Item {
   id: root
   
-  implicitWidth: 180
+  implicitWidth: battery.visible ? 180 : 100
   implicitHeight: 30
+
+  anchors.centerIn: parent
 
   // Poller {
   //   id: clock
@@ -27,6 +29,7 @@ Item {
   }
 
   Battery {
+    id: battery
     anchors.right: root.right
     anchors.verticalCenter: clockDisplay.verticalCenter
     anchors.rightMargin: 10

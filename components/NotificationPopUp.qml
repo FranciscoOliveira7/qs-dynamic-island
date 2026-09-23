@@ -7,8 +7,9 @@ import "../services"
 import ".."
 
 Item {
-  
   id: root
+  
+  anchors.centerIn: parent
   
   implicitWidth: 280
   implicitHeight: column.implicitHeight
@@ -17,7 +18,7 @@ Item {
 
   ColumnLayout {
     id: column
-    width: root.implicitWidth
+    width: root.width
 
     Repeater {
       model: root.service.trackedNotifications
@@ -28,11 +29,11 @@ Item {
         required property var modelData
         readonly property var service: NotificationService
 
-        // Timer {
-        //   running: card.modelData.urgency !== NotificationUrgency.Critical
-        //   interval: 5000
-        //   onTriggered: root.service.dismiss(card.modelData)
-        // }
+        Timer {
+          running: card.modelData.urgency !== NotificationUrgency.Critical
+          interval: 5000
+          onTriggered: root.service.dismiss(card.modelData)
+        }
 
         Layout.fillWidth: true
         // Layout.preferredHeight: 60

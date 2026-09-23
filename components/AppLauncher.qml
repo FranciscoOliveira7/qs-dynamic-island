@@ -73,10 +73,9 @@ Item {
   }
 
   readonly property int maxVisible: 7
-  readonly property int itemH: 42
-  readonly property int panelW: 420
-  readonly property int panelH: 88 + Math.min(filteredApps.length, maxVisible) * itemH
-  // readonly property int panelH: 88
+  readonly property int itemH: 48
+  readonly property int panelW: root.implicitWidth - 20
+  readonly property int panelH: 74 + Math.min(filteredApps.length, maxVisible) * itemH
 
   Rectangle {
     id: panel
@@ -85,7 +84,8 @@ Item {
     color: "transparent"
 
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.bottom: parent.bottom
+    anchors.top: parent.top
+    anchors.topMargin: 10
 
     Column {
       anchors {
@@ -93,28 +93,14 @@ Item {
         left: parent.left
         right: parent.right
       }
-      spacing: 0
+      spacing: 10
 
       // SearchBox
       Rectangle {
         width: parent.width
         height: 44
         radius: 10
-        color: Qt.rgba(1, 1, 1, 0.07)
-
-        Rectangle {
-          anchors.fill: parent
-          radius: 10
-          color: "transparent"
-          border.color: Theme.border
-          border.width: 1
-          opacity: searchInput.activeFocus ? 0.55 : 0
-          Behavior on opacity {
-            NumberAnimation {
-              duration: 150
-            }
-          }
-        }
+        color: Theme.base
 
         Row {
           anchors {
@@ -127,19 +113,6 @@ Item {
           Item {
             width: parent.width - 40
             height: parent.height
-
-            Text {
-              anchors.fill: parent
-              text: root.isSearching ? "" : "Search apps…"
-              color: Theme.textPrimary
-              opacity: 0.28
-              font {
-                pixelSize: 13
-                family: "JetBrainsMono Nerd Font"
-              }
-              verticalAlignment: Text.AlignVCenter
-              visible: searchInput.text === ""
-            }
 
             TextInput {
               id: searchInput
@@ -226,12 +199,7 @@ Item {
               bottomMargin: 2
             }
             radius: 10
-            color: appRow.sel ? "red" : "transparent"
-            Behavior on color {
-              ColorAnimation {
-                duration: 100
-              }
-            }
+            color: appRow.sel ? Theme.textPrimary : "transparent"
 
             Row {
               anchors {
@@ -247,18 +215,14 @@ Item {
                 height: 36
                 radius: 9
                 anchors.verticalCenter: parent.verticalCenter
-                color: appRow.sel ? Theme.borderHover : Qt.rgba(1, 1, 1, 0.08)
-                Behavior on color {
-                  ColorAnimation {
-                    duration: 100
-                  }
-                }
+                // color: appRow.sel ? Theme.borderHover : Qt.rgba(1, 1, 1, 0.08)
+                color: "transparent"
 
                 Image {
                   id: appIcon
                   anchors.centerIn: parent
-                  width: 22
-                  height: 22
+                  width: 28
+                  height: 28
                   source: appRow.modelData.icon !== "" ? "image://icon/" + appRow.modelData.icon : ""
                   smooth: true
                   mipmap: true
@@ -274,11 +238,6 @@ Item {
                     weight: Font.Bold
                   }
                   color: appRow.sel ? Theme.green : Theme.textPrimary
-                  Behavior on color {
-                    ColorAnimation {
-                      duration: 100
-                    }
-                  }
                 }
               }
 
@@ -294,12 +253,7 @@ Item {
                     family: "JetBrainsMono Nerd Font"
                     weight: appRow.sel ? Font.Medium : Font.Normal
                   }
-                  color: appRow.sel ? Theme.textPrimary : Theme.green
-                  Behavior on color {
-                    ColorAnimation {
-                      duration: 100
-                    }
-                  }
+                  color: appRow.sel ? Theme.background : Theme.textPrimary
                 }
 
                 // "Recently used" pill OR generic name
@@ -334,7 +288,7 @@ Item {
                       pixelSize: 11
                       family: "JetBrainsMono Nerd Font"
                     }
-                    color: Theme.textPrimary
+                    color: appRow.sel ? Theme.background : Theme.textPrimary
                     opacity: 0.35
                     anchors.verticalCenter: parent.verticalCenter
                   }
@@ -345,7 +299,7 @@ Item {
             MouseArea {
               anchors.fill: parent
               hoverEnabled: true
-              onEntered: root.selectedIndex = index
+              onEntered: root.selectedIndex = appRow.index
               onClicked: root.launchEntry(appRow.modelData)
               onWheel: function (wheel) {
                 if (wheel.angleDelta.y < 0)

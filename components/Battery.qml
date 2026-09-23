@@ -5,6 +5,7 @@ import ".."
 Rectangle {
   id: root
 
+  visible: UPower.displayDevice && UPower.displayDevice.isLaptopBattery
   implicitWidth: 40
   implicitHeight: 16
 
