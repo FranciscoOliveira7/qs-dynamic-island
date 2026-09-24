@@ -6,24 +6,20 @@ Item {
 
   required property int islandState
 
-  // implicitWidth: viewLoader.item ? viewLoader.item.implicitWidth : 0
-
-  implicitWidth: loader.item ? loader.item.implicitWidth : 0
-  implicitHeight: loader.item ? loader.item.implicitHeight : 0
-  // implicitWidth: viewLoader.width
-  // implicitHeight: viewLoader.height
-  // anchors.centerIn: parent
+  implicitWidth: loader.implicitWidth
+  implicitHeight: loader.implicitHeight
 
   anchors.fill: parent
+
+  // Components.AppLauncher {
+  //   visible: IslandController.inslandState == IslandController.Launcher
+  // }
 
   Loader {
     id: loader
     anchors.fill: parent
 
-    onLoaded: { fadeOut.stop(); fadeIn.start() }
-
-    // width: item ? item.implicitWidth : 0
-    // height: item ? item.implicitHeight : 0
+    // asynchronous: true
 
     sourceComponent: {
       switch (root.islandState) {
@@ -37,17 +33,16 @@ Item {
           return launcher
       }
     }
-  }
-
-  NumberAnimation on opacity {
-    id: fadeOut
-    to: 0
-    // onStopped: { loader.sourceComponent = sourceComponent }
-  }
-
-  NumberAnimation on opacity {
-    id: fadeIn
-    to: 1
+    onLoaded: {
+      if (root.islandState === IslandController.Launcher && item) {
+        // Option A: If your AppLauncher exposes a method or alias to the input
+        if (typeof item.forceInputFocus === "function") {
+          item.forceInputFocus(); } else {
+          // Option B: Fallback if you want to force focus on the root of the launcher
+          // item.forceActiveFocus();
+        }
+      }
+    }
   }
 
   Component {

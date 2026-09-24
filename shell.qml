@@ -25,6 +25,35 @@ PanelWindow {
   //   color: "#77ff0000"
   // }
 
+  Rectangle {
+    anchors { left: parent.left; top: parent.top }
+    anchors.leftMargin: 200
+    width: 70
+    height: 40
+
+    color: "#77ff0000"
+    
+    // TextInput {
+    //   id: searchInput
+    //   height: 20
+    //   width: 50
+    //   anchors.fill: parent
+    //   color: "white"
+    //   selectionColor: "green"
+    //   focus: true
+    //   activeFocusOnPress: false
+    //   font {
+    //     pixelSize: 13
+    //     family: "JetBrainsMono Nerd Font"
+    //   }
+    //   verticalAlignment: TextInput.AlignVCenter
+    //   clip: true
+    //   text: "balls"
+
+    //   onTextEdited: root.searchQuery = text
+    // }
+  }
+
   RectangularShadow {
     anchors.fill: capsule
 

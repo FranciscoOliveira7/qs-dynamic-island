@@ -16,6 +16,11 @@ Item {
 
   readonly property bool isSearching: searchQuery.trim() !== ""
 
+  // Call this from the viewHost Loader
+  function forceInputFocus() {
+      searchInput.forceActiveFocus();
+  }
+
   property var filteredApps: {
     var q = searchQuery.trim().toLowerCase();
     var vals = DesktopEntries.applications.values;
@@ -128,6 +133,10 @@ Item {
               clip: true
 
               onTextEdited: root.searchQuery = text
+              onAccepted: {
+                if (root.filteredApps.length > 0)
+                  root.launchEntry(root.filteredApps[root.selectedIndex]);
+              }
 
               Keys.onPressed: function (event) {
                 if (event.key === Qt.Key_Up) {
@@ -136,11 +145,12 @@ Item {
                 } else if (event.key === Qt.Key_Down) {
                   root.navigate(1);
                   event.accepted = true;
-                } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                  if (root.filteredApps.length > 0)
-                    root.launchEntry(root.filteredApps[root.selectedIndex]);
-                  event.accepted = true;
-                } else if (event.key === Qt.Key_Escape) {
+                } //else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                //   if (root.filteredApps.length > 0)
+                //     root.launchEntry(root.filteredApps[root.selectedIndex]);
+                //   event.accepted = true;
+                //}
+                else if (event.key === Qt.Key_Escape) {
                   AppLauncherState.hide();
                   event.accepted = true;
                 }
