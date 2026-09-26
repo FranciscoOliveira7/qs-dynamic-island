@@ -31,6 +31,8 @@ Item {
           return notifications
         case IslandController.Launcher:
           return launcher
+        case IslandController.Wallpapers:
+          return wallpicker
       }
     }
     onLoaded: {
@@ -43,6 +45,11 @@ Item {
         }
       }
     }
+  }
+
+  Component {
+    id: wallpicker
+    Components.WallpaperPicker {}
   }
 
   Component {

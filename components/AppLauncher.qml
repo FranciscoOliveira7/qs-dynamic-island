@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Io
 import QtQuick
 import ".."
 
@@ -57,9 +58,26 @@ Item {
     });
   }
 
+  Process {
+    running: false
+    id: launchProcess
+    command: [ "kitty" ]
+  }
+
   function launchEntry(entry) {
     AppLauncherState.recordLaunch(entry.id);
-    entry.execute();
+    if (entry.runInTerminal) {
+      const terminalCommand = ["kitty", "-e" ]
+      const runWithTerminal = terminalCommand.concat(entry.command)
+      launchProcess.command = runWithTerminal
+    }
+    else {
+      launchProcess.command = entry.command
+    }
+      console.log(launchProcess.command)
+    launchProcess.workingDirectory = entry.workingDirectory
+    launchProcess.startDetached()
+    // launchProcess.running = true
     AppLauncherState.hide();
   }
 
@@ -192,6 +210,11 @@ Item {
           }
         }
 
+        // highlight: Rectangle {
+        //   // anchors.fill: parent
+        // }
+        // highlightFollowsCurrentItem: true
+
         delegate: Item {
           id: appRow
           width: listView.width
@@ -234,6 +257,8 @@ Item {
                   width: 28
                   height: 28
                   source: appRow.modelData.icon !== "" ? "image://icon/" + appRow.modelData.icon : ""
+                  // sourceSize.width: 28
+                  // sourceSize.height: 28
                   smooth: true
                   mipmap: true
                 }

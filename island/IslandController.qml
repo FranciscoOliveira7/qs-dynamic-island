@@ -11,7 +11,8 @@ Scope {
     Default = 0,
     Expanded = 1,
     Notification = 2,
-    Launcher = 3
+    Launcher = 3,
+    Wallpapers = 4
   }
 
   property bool isKeyboardFocused: isOnLauncher
@@ -24,6 +25,8 @@ Scope {
   }
 
   property int islandState: {
+    // return IslandController.Wallpapers
+
     if (isOnLauncher) {
       return IslandController.Launcher
     }
