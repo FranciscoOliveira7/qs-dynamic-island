@@ -15,7 +15,8 @@ Scope {
     Wallpapers = 4
   }
 
-  property bool isKeyboardFocused: isOnLauncher
+  // For states that need keyboard
+  property bool isKeyboardFocused: isOnLauncher || isOnWallpaperPicker
 
   property bool hasNotifications: {
     return Services.NotificationService.unreadCount > 0
@@ -23,12 +24,19 @@ Scope {
   property bool isOnLauncher: {
     return AppLauncherState.launcherVisible
   }
+  property bool isOnWallpaperPicker: {
+    return Services.WallpaperService.isMenuOpen
+  }
 
   property int islandState: {
     // return IslandController.Wallpapers
 
+    // Simple Priority bases state
     if (isOnLauncher) {
       return IslandController.Launcher
+    }
+    if (isOnWallpaperPicker) {
+      return IslandController.Wallpapers
     }
     if (hasNotifications) {
       return IslandController.Notification

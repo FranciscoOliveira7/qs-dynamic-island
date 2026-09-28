@@ -3,72 +3,105 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Qt.labs.folderlistmodel
 import ".."
+import "../services" as Services
 
-Rectangle {
+Item {
   id: root
   
   implicitWidth: 500
   implicitHeight: 200
 
+  FolderListModel {
+    id: folderModel
+    folder: root.directory
+    nameFilters: ["*.png", "*.jpg"]
+  }
+
   property var directory: "file:///home/francisco/Pictures/Wallpapers"
 
-  Component {
-    id: wallpaperEntry
+  // Call this from the viewHost Loader
+  // function forceInputFocus() {
+  //   listView.forceActiveFocus();
+  // }
 
-    Item {
-      implicitWidth: 160
-      implicitHeight: 90
+  function setWallpaper(wallpaperDir) {
+    const fileDir = ((listView.currentItem) as WallpaperEntry).filePath
+    Services.WallpaperService.setWallpaper(fileDir)
+    Services.WallpaperService.isMenuOpen = false
+  }
 
-      id: wallpaper
-      required property string fileName
+  component WallpaperEntry : Item {
+    implicitWidth: 160
+    implicitHeight: 90
 
-      Rectangle {
-        // implicitWidth: parent.width - 0
-        // implicitHeight: parent.height - 0
-      }
+    id: wallpaper
+    required property string fileName
+    required property string filePath
 
-      Image {
-        anchors.centerIn: parent
-        width: parent.width - 10
-        height: parent.height - 10
-        source: root.directory + "/" + wallpaper.fileName
-        sourceSize.width: 160
-        sourceSize.height: 90
-      }
+    Image {
+      anchors.centerIn: parent
+      width: parent.width - 10
+      height: parent.height - 10
+      source: root.directory + "/" + wallpaper.fileName
+      sourceSize.width: 160
+      sourceSize.height: 90
     }
   }
 
-  ListView {
-    anchors.fill: parent
+  Column {
 
-    FolderListModel {
-      id: folderModel
-      folder: root.directory
-      nameFilters: ["*.png", "*.jpg"]
+    Text {
+      anchors.horizontalCenter: parent.horizontalCenter
+      color: Theme.textPrimary
+      font.family: "JetbrainsMono Nerd Font"
+      font.pixelSize: 18
+      font.bold: true
+
+      text: ((listView.currentItem) as WallpaperEntry).fileName
     }
 
-    spacing: 10
-    orientation: ListView.Horizontal
-    model: folderModel
+    ListView {
+      id: listView
 
-    // populate: Transition {
-    //   NumberAnimation {
-    //     property: "opacity"
-    //     from: 0
-    //     to: 1
-    //     duration: 1000
-    //   }
-    // }
+      width: root.implicitWidth
+      height: root.implicitHeight
 
-    delegate: wallpaperEntry
-    highlight: Rectangle {
-      color: "green"
-      // width: 200
-      // height: 200
+      spacing: 10
+      orientation: ListView.Horizontal
+      model: folderModel
+
+      // populate: Transition {
+      //   NumberAnimation {
+      //     property: "opacity"
+      //     from: 0
+      //     to: 1
+      //     duration: 1000
+      //   }
+      // }
+
+      delegate: WallpaperEntry {}
+      highlight: Rectangle {
+        // color: "green"
+        color: Theme.textPrimary
+      }
+      highlightFollowsCurrentItem: true
+      highlightMoveDuration: 50
+
+      focus: true
+      keyNavigationEnabled: true
+      keyNavigationWraps: true
+
+      Keys.onPressed: function (event) {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+           // root.launchEntry(root.filteredApps[root.selectedIndex]);
+           root.setWallpaper(listView.currentIndex)
+           event.accepted = true;
+        }
+        else if (event.key === Qt.Key_Escape) {
+          Services.WallpaperService.isMenuOpen = false
+          event.accepted = true;
+        }
+      }
     }
-    highlightFollowsCurrentItem: true
-    focus: true
   }
-
-  color: "transparent"
 }

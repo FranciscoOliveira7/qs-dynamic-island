@@ -26,7 +26,7 @@ PanelWindow {
     // spread: 4
     // blur: 0
     
-    // color: Theme.border
+    color: "#77000000"
   }
 
   Island {

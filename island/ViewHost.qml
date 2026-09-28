@@ -59,7 +59,7 @@ Item {
 
   Component {
     id: expanded
-    Components.Idk {}
+    Components.HoverView {}
   }
 
   Component {

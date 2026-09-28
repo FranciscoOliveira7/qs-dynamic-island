@@ -9,7 +9,6 @@ Item {
   id: root
 
   property string searchQuery: ""
-  property int selectedIndex: 0
   readonly property bool isSelected: searchQuery.trim() !== ""
 
   implicitWidth: 420
@@ -19,7 +18,7 @@ Item {
 
   // Call this from the viewHost Loader
   function forceInputFocus() {
-      searchInput.forceActiveFocus();
+    searchInput.forceActiveFocus();
   }
 
   property var filteredApps: {
@@ -82,16 +81,14 @@ Item {
   }
 
   function navigate(delta) {
-    if (filteredApps.length === 0)
-      return;
-    selectedIndex = (selectedIndex + delta + filteredApps.length) % filteredApps.length;
-    listView.positionViewAtIndex(selectedIndex, ListView.Contain);
+    if (delta == 1) listView.incrementCurrentIndex()
+    else            listView.decrementCurrentIndex()
   }
 
   function reset() {
     searchInput.text = "";
     root.searchQuery = "";
-    root.selectedIndex = 0;
+    listView.currentIndex = 0;
     searchInput.forceActiveFocus();
   }
 
@@ -100,11 +97,10 @@ Item {
   readonly property int panelW: root.implicitWidth - 20
   readonly property int panelH: 74 + Math.min(filteredApps.length, maxVisible) * itemH
 
-  Rectangle {
+  Item {
     id: panel
     width: root.panelW
     height: root.panelH
-    color: "transparent"
 
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.top: parent.top
@@ -152,8 +148,7 @@ Item {
 
               onTextEdited: root.searchQuery = text
               onAccepted: {
-                if (root.filteredApps.length > 0)
-                  root.launchEntry(root.filteredApps[root.selectedIndex]);
+                root.launchEntry(root.filteredApps[listView.currentIndex]);
               }
 
               Keys.onPressed: function (event) {
@@ -185,7 +180,9 @@ Item {
         height: Math.min(root.filteredApps.length, root.maxVisible) * root.itemH
         model: root.filteredApps
         clip: true
-        interactive: false
+        keyNavigationWraps: true
+        keyNavigationEnabled: false
+        // interactive: false
 
         // Wheel on list (belt-and-suspenders alongside panel MouseArea)
         MouseArea {
@@ -210,10 +207,12 @@ Item {
           }
         }
 
-        // highlight: Rectangle {
-        //   // anchors.fill: parent
-        // }
-        // highlightFollowsCurrentItem: true
+        highlight: Rectangle {
+          radius: 10
+          color: Theme.textPrimary
+        }
+        highlightFollowsCurrentItem: true
+        highlightMoveDuration: 0
 
         delegate: Item {
           id: appRow
@@ -222,17 +221,14 @@ Item {
 
           required property int index
           required property var modelData
-          readonly property bool sel: root.selectedIndex === index
           readonly property bool isRecent: !root.isSearching && AppLauncherState.recentIds.indexOf(appRow.modelData.id) !== -1 && AppLauncherState.recentIds.indexOf(appRow.modelData.id) < 5
 
-          Rectangle {
+          Item {
             anchors {
               fill: parent
               topMargin: 2
               bottomMargin: 2
             }
-            radius: 10
-            color: appRow.sel ? Theme.textPrimary : "transparent"
 
             Row {
               anchors {
@@ -248,7 +244,7 @@ Item {
                 height: 36
                 radius: 9
                 anchors.verticalCenter: parent.verticalCenter
-                // color: appRow.sel ? Theme.borderHover : Qt.rgba(1, 1, 1, 0.08)
+                // color: appRow.ListView.ListView.ListView.ListView.isCurrentItem.isCurrentItem? Theme.borderHover : Qt.rgba(1, 1, 1, 0.08)
                 color: "transparent"
 
                 Image {
@@ -272,7 +268,7 @@ Item {
                     family: "JetBrainsMono Nerd Font"
                     weight: Font.Bold
                   }
-                  color: appRow.sel ? Theme.green : Theme.textPrimary
+                  color: appRow.ListView.isCurrentItem ? Theme.green : Theme.textPrimary
                 }
               }
 
@@ -286,9 +282,9 @@ Item {
                   font {
                     pixelSize: 13
                     family: "JetBrainsMono Nerd Font"
-                    weight: appRow.sel ? Font.Medium : Font.Normal
+                    weight: appRow.ListView.isCurrentItem ? Font.Medium : Font.Normal
                   }
-                  color: appRow.sel ? Theme.background : Theme.textPrimary
+                  color: appRow.ListView.isCurrentItem ? Theme.background : Theme.textPrimary
                 }
 
                 // "Recently used" pill OR generic name
@@ -323,7 +319,7 @@ Item {
                       pixelSize: 11
                       family: "JetBrainsMono Nerd Font"
                     }
-                    color: appRow.sel ? Theme.background : Theme.textPrimary
+                    color: appRow.ListView.isCurrentItem ? Theme.background : Theme.textPrimary
                     opacity: 0.35
                     anchors.verticalCenter: parent.verticalCenter
                   }
@@ -333,8 +329,7 @@ Item {
 
             MouseArea {
               anchors.fill: parent
-              hoverEnabled: true
-              onEntered: root.selectedIndex = appRow.index
+              // onEntered: root.selectedIndex = appRow.index
               onClicked: root.launchEntry(appRow.modelData)
               onWheel: function (wheel) {
                 if (wheel.angleDelta.y < 0)
