@@ -11,10 +11,6 @@ Item {
 
   anchors.fill: parent
 
-  // Components.AppLauncher {
-  //   visible: IslandController.inslandState == IslandController.Launcher
-  // }
-
   Loader {
     id: loader
     anchors.fill: parent
@@ -33,6 +29,8 @@ Item {
           return launcher
         case IslandController.Wallpapers:
           return wallpicker
+        case IslandController.OSD:
+          return osd
       }
     }
     onLoaded: {
@@ -70,5 +68,10 @@ Item {
   Component {
     id: launcher
     Components.AppLauncher {}
+  }
+
+  Component {
+    id: osd
+    Components.OnScreenDisplay {}
   }
 }

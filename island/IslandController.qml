@@ -12,12 +12,16 @@ Scope {
     Expanded = 1,
     Notification = 2,
     Launcher = 3,
-    Wallpapers = 4
+    Wallpapers = 4,
+    OSD = 5
   }
 
   // For states that need keyboard
   property bool isKeyboardFocused: isOnLauncher || isOnWallpaperPicker
 
+  property bool isOnOSD: {
+    return Services.OSDService.isShowing
+  }
   property bool hasNotifications: {
     return Services.NotificationService.unreadCount > 0
   }
@@ -32,6 +36,9 @@ Scope {
     // return IslandController.Wallpapers
 
     // Simple Priority bases state
+    if (isOnOSD) {
+      return IslandController.OSD
+    }
     if (isOnLauncher) {
       return IslandController.Launcher
     }
@@ -53,14 +60,6 @@ Scope {
     target: "launcher"
     function toggle(): void {
       AppLauncherState.launcherVisible = !AppLauncherState.launcherVisible
-    }
-  }
-
-  Connections {
-    target: AppLauncherState
-
-    function onHide() {
-      console.log("hiding...")
     }
   }
 }
