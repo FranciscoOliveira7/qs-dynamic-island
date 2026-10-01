@@ -12,9 +12,11 @@ Singleton {
 
   property int unreadCount: 0
 
-  signal unread(unread: int)
   signal notificationReceived(notification: Notification)
   readonly property var trackedNotifications: server.trackedNotifications
+  onTrackedNotificationsChanged: {
+    unreadCount = trackedNotifications.values.length
+  }
 
   NotificationServer {
     id: server
@@ -24,8 +26,6 @@ Singleton {
 
     onNotification: n => {
       root.unreadCount++
-      root.unread(root.unreadCount)
-      // root.notificationReceived(n)
       history.insert(0, {
         summary: n.summary,
         body: n.body,
@@ -40,7 +40,6 @@ Singleton {
   function dismiss(notification) {
     notification.dismiss()
     unreadCount--
-    root.unread(root.unreadCount)
   }
 
   function activate(notification) {
